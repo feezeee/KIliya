@@ -1,10 +1,10 @@
-﻿@*@model IEnumerable<SitPlace>
+﻿@model IEnumerable<SitPlace>
 @{
     Layout = "_Layout";    
 }
 
 
-@*<div class="container-fluid myContainer">
+<div class="container-fluid myContainer">
     <div class="div-contenet-table overflow-auto">
         <table class="table shadow p-3 mb-5 rounded" id="myTable">
             <thead>
@@ -23,7 +23,7 @@
                         <th class="d-flex justify-content-between">
                             <a asp-action="Edit" asp-controller="SitPlace" asp-route-id="@el.Id"><i class="bi bi-pencil"></i></a>
                             @{
-                                if(el.Vans?.Count == 0 && el.Van_SitPlaces?.Count == 0)
+                                if(el.TrainVanSits?.Where(t=>t.Ticket != null).ToList().Count == 0)
                                 {
                                     <a asp-action="Delete" asp-controller="SitPlace" asp-route-id="@el.Id"><i class="bi bi-trash"></i></a>                                    
                                 }
@@ -49,4 +49,4 @@
         </table>
 
     </div>
-</div>*@
+</div>

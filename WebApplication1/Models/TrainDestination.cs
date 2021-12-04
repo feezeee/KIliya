@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace WebApplication1.Models
 {
@@ -9,11 +10,13 @@ namespace WebApplication1.Models
         public int Id { get; set; }
 
         [Column("train_id")]
+        [Required]
         public int TrainId { get; set; }
         public Train? Train { get; set; }
 
 
         [Column("destination_id")]
+        [Required]
         public int DestinationId { get; set; }
         public Destination? Destination { get; set; }
 

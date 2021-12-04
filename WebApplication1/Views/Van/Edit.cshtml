@@ -1,9 +1,9 @@
-﻿@*@model Van
+﻿@model Van
 @{
     Layout = "_Layout";
 }
 
-@*<div class="createPlace">
+<div class="createPlace">
     <form class="createForm form-floating" asp-controller="Van" asp-action="Edit" method="post">
             <a asp-controller="Van" asp-action="Index" class="position-absolute top-0 start-100 translate-middle"><i class="bi bi-x-circle fs-2"></i></a>
         
@@ -17,7 +17,7 @@
             </div>
           </div>
 
-          <div class="col-md">
+         @* <div class="col-md">
             <div class="form-floating">
                 <select asp-for="TrainId" asp-items="ViewBag.Trains" class="form-select" id="floatingSelectGrid" aria-label="Floating label select example" value="@Model?.TrainId">
                     <option></option>
@@ -25,9 +25,9 @@
                 </select>              
                 <label for="floatingSelectGrid">Поезд</label>
             </div>
-          </div>     
+          </div> *@    
         </div>
-        @if(ViewBag.SitPlaces != null)
+        @*@if(ViewBag.SitPlaces != null)
         {            
              <div class="row g-2 p-3">
              <span>Выберите места</span>
@@ -54,7 +54,7 @@
 
                     }
             </div>
-        }   
+        }   *@
         
     <div class="createButton">
         <button class="btn btn-success" type="submit">
@@ -66,4 +66,4 @@
     </div>
         
     </form>
-</div>*@
+</div>

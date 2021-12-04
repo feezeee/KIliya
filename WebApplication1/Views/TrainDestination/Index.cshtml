@@ -1,0 +1,54 @@
+﻿@model IEnumerable<IGrouping<int, TrainDestination>>
+@{
+    Layout = "_Layout";    
+}
+
+
+<div class="container-fluid myContainer">
+    <div class="div-contenet-table overflow-auto">
+        @foreach(var gr in Model)
+        {
+            
+            <table class="table shadow p-3 mb-5 rounded" id="myTable">
+            <thead>
+                <tr>                    
+                    <th></th>
+                    <th class="text-center">Поезд</th>
+                    <th class="text-center">Станция</th>
+                    <th class="text-center">Дата-время отбывания</th>
+                    <th class="text-center">Дата-время прибытия</th>
+                </tr>
+            </thead> 
+            <tbody id="editClickbody">                         
+            @foreach(var traindest in gr)
+            {                          
+                    <tr class="rowEditStart">
+                        <th class="d-flex justify-content-between">
+                            <a asp-action="Edit" asp-controller="TrainDestination" asp-route-id="@gr.Key"><i class="bi bi-pencil"></i></a>
+                            <a asp-action="Delete" asp-controller="TrainDestination" asp-route-id="@gr.Key"><i class="bi bi-trash"></i></a>
+                        </th>
+                        <td class="text-center">
+                            @traindest.Train?.Name
+                        </td>  
+                         <td class="text-center">
+                            @traindest.Destination?.Name
+                        </td>  
+                         <td class="text-center">
+                            @traindest.DepartureTime
+                        </td>  
+                        <td class="text-center">
+                            @traindest.ArrivalTime
+                        </td>  
+                    </tr>
+                         
+            }
+             
+                
+            </tbody>
+        </table>
+        }
+        
+
+    </div>
+</div>
+

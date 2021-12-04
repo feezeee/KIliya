@@ -1,4 +1,4 @@
-﻿@*@model IEnumerable<Van>
+﻿@model IEnumerable<Van>
 @{
     Layout = "_Layout";    
 }
@@ -12,8 +12,6 @@
                     <th></th>
                     <th class="text-center">Индентификатор</th>
                     <th class="text-center">Наименование вагона</th>
-                    <th class="text-center">Количесвто поездов, с которыми соеденен</th>
-                    <th class="text-center">Количество мест</th>
                 </tr>
             </thead>            
             <tbody id="editClickbody">
@@ -24,7 +22,7 @@
                         <th class="d-flex justify-content-between">
                             <a asp-action="Edit" asp-controller="Van" asp-route-id="@el.Id"><i class="bi bi-pencil"></i></a>
                             @{
-                                if(el.VanSits?.Where(t=>t.Ticket != null).ToList().Count == 0)
+                                if(el.TrainVanSits?.Where(t=>t.Ticket != null).ToList().Count == 0)
                                 {
                                     <a asp-action="Delete" asp-controller="Van" asp-route-id="@el.Id"><i class="bi bi-trash"></i></a>                                    
                                 }
@@ -39,13 +37,7 @@
                         </th>
                         <td class="text-center">
                             @el.Name
-                        </td>       
-                         <td class="text-center">
-                            @el.TrainVans?.Count
                         </td>  
-                         <td class="text-center">
-                            @el.VanSits?.Count
-                        </td>   
                     </tr>
                 }              
                 
@@ -55,4 +47,3 @@
     </div>
 </div>
 
-*@

@@ -1,62 +1,64 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using System.Linq;
 using WebApplication1.Models;
 
 namespace WebApplication1.Controllers
 {
-    public class TrainController : Controller
+    public class TrainDestinationController : Controller
     {
         private DBConector db;
-        public TrainController(DBConector db)
+        public TrainDestinationController(DBConector db)
         {
             this.db = db;
         }
-        // GET: TrainController
+        // GET: TrainDestinationController
         public async Task<IActionResult> Index()
         {
-            //
-            var res = await db.Trains.Include(t => t.TrainDestinations).ToListAsync();            
-            ViewData["Title"] = "Поезда";
+            
+            var res = db.TrainDestinations.Include(t => t.Train).Include(t=>t.Destination).OrderBy(t => t.DepartureTime).OrderBy(t=>t.ArrivalTime).AsEnumerable().GroupBy(t => t.TrainId);
+            ViewData["Title"] = "Поезда и маршруты";
             return View(res);
         }
 
 
-        // GET: TrainController/Create
+        // GET: TrainDestinationController/Create
         public async Task<IActionResult> Create()
         {
-            ViewData["Title"] = "Добавление поезда";           
-            Train train = new Train();
-            return View(train);
+            TrainDestination trainDestination = new TrainDestination();
+            ViewData["Title"] = "Добавление маршрута к поезду";
+            ViewBag.Destinations = new SelectList(await db.Destinations.ToListAsync(), "Id", "Name");
+            ViewBag.Trains = new SelectList(await db.Trains.ToListAsync(), "Id", "Name");
+            return View(trainDestination);
         }
 
-        // POST: TrainController/Create
+        // POST: TrainDestinationController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(Train train)
+        public async Task<IActionResult> Create(TrainDestination trainDestination)
         {
             if (ModelState.IsValid)
             {
-                db.Add(train);
+                db.Add(trainDestination);
 
                 await db.SaveChangesAsync();
                 return RedirectToAction("Index");
             }
-            ViewData["Title"] = "Добавление поезда";
-            return View(train);
+            ViewData["Title"] = "Добавление маршрута к поезду";
+            ViewBag.Destinations = new SelectList(await db.Destinations.ToListAsync(), "Id", "Name");
+            ViewBag.Trains = new SelectList(await db.Trains.ToListAsync(), "Id", "Name");
+            return View(trainDestination);
         }
 
-        // GET: TrainController/Edit/5
+        // GET: TrainDestinationController/Edit/5
         public async Task<IActionResult> Edit(int id)
         {
             Train train = await db.Trains.Include(t => t.TrainDestinations).Where(t => t.Id == id).FirstOrDefaultAsync();
-            ViewData["Title"] = "Изменение поезда";            
+            ViewData["Title"] = "Изменение поезда";
             return View(train);
         }
 
-        // POST: TrainController/Edit/5
+        // POST: TrainDestinationController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(Train train)
@@ -93,10 +95,10 @@ namespace WebApplication1.Controllers
         //}
 
 
-        // GET: TrainController/Delete/5
+        // GET: TrainDestinationController/Delete/5
         public async Task<IActionResult> Delete(int id)
         {
-            var res = await db.Trains.Include(t => t.TrainDestinations).Where(t => t.Id == id).FirstOrDefaultAsync();
+            var res = await db.TrainDestinations.Include(t => t.TrainDestinations).Where(t => t.Id == id).FirstOrDefaultAsync();
 
             if (res != null && res.TrainDestinations?.Count == 0)
             {
@@ -105,5 +107,6 @@ namespace WebApplication1.Controllers
             }
             return RedirectToAction("Index");
         }
+
     }
 }

@@ -1,9 +1,9 @@
-﻿@*@model SitPlace
+﻿@model SitPlace
 @{
     Layout = "_Layout";
 }
 
-@*<div class="createPlace">
+<div class="createPlace">
     <form class="createForm form-floating" asp-controller="SitPlace" asp-action="Edit" method="post">
             <a asp-controller="SitPlace" asp-action="Index" class="position-absolute top-0 start-100 translate-middle"><i class="bi bi-x-circle fs-2"></i></a>
         
@@ -28,7 +28,7 @@
         
     <div class="createButton">
         <button class="btn btn-success" type="submit">
-                Создать
+                Сохранить
             </button>
             <button class="btn btn-primary" type="reset">
                 Очистить
@@ -36,4 +36,4 @@
     </div>
         
     </form>
-</div>*@
+</div>
