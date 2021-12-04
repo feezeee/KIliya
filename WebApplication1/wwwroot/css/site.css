@@ -1,0 +1,124 @@
+* {
+    font-family: 'Jura', sans-serif;
+}
+
+a{
+    text-decoration: none;
+}
+
+ul{
+    padding:0;
+    margin: 0;
+}
+p{
+    margin: 0;
+}
+
+li{
+    list-style-type:none;
+}
+
+
+html {
+  font-size: 14px;
+}
+
+
+@media (min-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+body {
+  margin-bottom: 60px;
+}
+
+html, body {
+    width: 100%;
+    height: 100%;
+    padding: 0;
+    margin: 0;
+}
+
+body{
+    display:flex;
+}
+
+.myNav {
+    width: 400px;
+    position: fixed;
+}
+
+    .myNav.myHeader {
+        
+    }
+
+
+    .myNav ul{
+        margin-top: 10px;
+    }
+
+    .myNav ul li {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .myNav ul li p{
+        margin-left: 10px;
+    }
+
+        .myNav ul li a {
+            margin: 5px 0px;
+            margin-left: 20px;
+        }
+
+/*Кастомный бустрап*/
+.Height100{
+    height: 100% !important;
+}
+.Width100{
+    width: 100% !important;
+}
+.HeightMin100 {
+    min-height: 100% !important;
+}
+/**/
+
+/*Для создания чего-либо*/
+.createPlace
+{
+    height: 100%;
+    width: 100%;
+    display: flex;
+    justify-content:center;
+    align-items:center;
+    padding:10px;
+}
+.createForm {
+    min-width: 700px;
+    box-shadow: 0 0 5px;
+    padding: 20px;
+    border-radius: 10px;
+}
+.createButton{
+    padding:20px;
+    display: flex;
+    justify-content: space-around;
+}
+/**/
+.myMain {
+    padding-left: 400px;
+    width: 100%;
+    /*background-color: rebeccapurple;*/
+}
+
+.myContainer{
+    
+}
+

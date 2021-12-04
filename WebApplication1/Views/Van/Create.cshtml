@@ -1,0 +1,59 @@
+﻿@*@model Van
+@{
+    Layout = "_Layout";
+}
+
+<div class="createPlace">
+    <form class="createForm form-floating" asp-controller="Van" asp-action="Create" method="post">
+            <a asp-controller="Van" asp-action="Index" class="position-absolute top-0 start-100 translate-middle"><i class="bi bi-x-circle fs-2"></i></a>
+        
+        <div class="row g-2 p-3">
+          <div class="col-md">
+            <div class="form-floating">             
+              <input required asp-for="Name" type="text" class="form-control" id="floatingInputGrid" placeholder="228" value="@Model?.Name">
+              @Html.ValidationMessageFor(model => model.Name, null, new { style = "color:red" })
+              <label for="floatingInputGrid">Введите наименование вагона</label>
+            </div>
+          </div>
+
+          @*<div class="col-md">
+            <div class="form-floating">
+                <select asp-for="TrainId" asp-items="ViewBag.Trains" class="form-select" id="floatingSelectGrid" aria-label="Floating label select example" value="@Model?.TrainId">
+                    <option></option>
+
+                </select>              
+                <label for="floatingSelectGrid">Поезд</label>
+            </div>
+          </div>    
+        </div>
+        @if(ViewBag.SitPlaces != null)
+        {            
+             <div class="row g-2 p-3">
+             <span>Выберите места</span>
+             @foreach(SitPlace sit in ViewBag.SitPlaces)
+            {
+                <label style="display: flex; align-items:center;">
+                                <input type="checkbox"
+                                       name="selectedSits"
+                                       value="@sit.Id" style="margin-right: 10px;" />
+                                @sit.Name
+                </label>
+            }
+           
+            </div>
+        }   
+        
+    <div class="createButton">
+        <button class="btn btn-success" type="submit">
+                Создать
+            </button>
+            <button class="btn btn-primary" type="reset">
+                Очистить
+        </button>
+    </div>
+        
+    </form>
+</div>
+
+
+*@

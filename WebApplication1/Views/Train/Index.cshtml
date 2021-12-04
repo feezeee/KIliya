@@ -1,0 +1,57 @@
+﻿@model IEnumerable<Train>
+@{
+    Layout = "_Layout";    
+}
+
+
+<div class="container-fluid myContainer">
+    <div class="div-contenet-table overflow-auto">
+        <table class="table shadow p-3 mb-5 rounded" id="myTable">
+            <thead>
+                <tr>                    
+                    <th></th>
+                    <th class="text-center">Индентификатор</th>
+                    <th class="text-center">Наименование поезда</th>
+                    <th class="text-center">Откуда</th>
+                    <th class="text-center">Куда</th>
+                </tr>
+            </thead>            
+            <tbody id="editClickbody">
+                
+                @foreach (var el in Model)
+                {                    
+                    <tr class="rowEditStart">
+                        <th class="d-flex justify-content-between">
+                            <a asp-action="Edit" asp-controller="Train" asp-route-id="@el.Id"><i class="bi bi-pencil"></i></a>
+                            @{
+                                if(el.TrainDestinations?.Count == 0 && el.TrainVanSits?.Count == 0)
+                                {
+                                    <a asp-action="Delete" asp-controller="Train" asp-route-id="@el.Id"><i class="bi bi-trash"></i></a>                                    
+                                }
+                                else
+                                {
+                                    <br>
+                                }
+                            }
+                        </th>                        
+                        <th class="editId text-center">   
+                            @el.Id
+                        </th>
+                        <td class="text-center">
+                            @el.Name
+                        </td>     
+                        <td class="text-center">
+                            @el.DestinationFrom (@el.DepartureTime)
+                        </td>   
+                        <td class="text-center">
+                            @el.DestinationTo (@el.ArrivalTime)
+                        </td>  
+                    </tr>
+                }              
+                
+            </tbody>
+        </table>
+
+    </div>
+</div>
+

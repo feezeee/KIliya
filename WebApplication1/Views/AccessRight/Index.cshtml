@@ -1,0 +1,58 @@
+﻿@model IEnumerable<AccessRight>
+@{
+    Layout = "_Layout";    
+}
+
+
+<div class="container-fluid myContainer">
+    <div class="div-contenet-table overflow-auto">
+        <table class="table shadow p-3 mb-5 rounded" id="myTable">
+            <thead>
+                <tr>                    
+                    <th></th>
+                    <th class="text-center">Индентификатор</th>
+                    <th class="text-center">Наименование</th>
+                    <th class="text-center">Количество работников</th>
+                </tr>
+            </thead>            
+            <tbody id="editClickbody">
+                
+                @foreach (var el in Model)
+                {                    
+                    <tr class="rowEditStart">
+                        <th class="d-flex justify-content-between">
+                            @{
+                                if(el.Id > 2)
+                                {
+                                    <a asp-action="Edit" asp-controller="AccessRight" asp-route-id="@el.Id"><i class="bi bi-pencil"></i></a>
+                                    
+                                }
+                                if(el.Id > 2 && el.Workers?.Count == 0)
+                                {
+                                    <a asp-action="Delete" asp-controller="AccessRight" asp-route-id="@el.Id"><i class="bi bi-trash"></i></a>
+                                    
+                                }
+                                else
+                                {
+                                    <br>
+                                }
+                            }
+                        </th>                        
+                        <th class="editId text-center">   
+                            @el.Id
+                        </th>
+                        <td class="text-center">
+                            @el.Name
+                        </td>
+                        <td class="text-center">
+                            @el.Workers?.Count
+                        </td>                                             
+                    </tr>
+                }              
+                
+            </tbody>
+        </table>
+
+    </div>
+</div>
+

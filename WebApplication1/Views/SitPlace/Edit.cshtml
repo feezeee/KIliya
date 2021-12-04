@@ -1,0 +1,39 @@
+﻿@*@model SitPlace
+@{
+    Layout = "_Layout";
+}
+
+@*<div class="createPlace">
+    <form class="createForm form-floating" asp-controller="SitPlace" asp-action="Edit" method="post">
+            <a asp-controller="SitPlace" asp-action="Index" class="position-absolute top-0 start-100 translate-middle"><i class="bi bi-x-circle fs-2"></i></a>
+        
+        <div class="row g-2 p-3">
+          <div class="col-md">
+            <div class="form-floating">        
+              <input hidden required asp-for="Id" type="text" placeholder="Id" value="@Model?.Id">
+              <input required asp-for="Name" type="text" class="form-control" id="floatingInputGrid" placeholder="228" value="@Model?.Name">
+              @Html.ValidationMessageFor(model => model.Name, null, new { style = "color:red" })
+              <label for="floatingInputGrid">Введите наименование места</label>
+            </div>
+          </div>
+          <div class="col-md">
+            <div class="form-floating">
+              <input required asp-for="Price" type="number" class="form-control" id="floatingInputGrid" placeholder="150" value="@Model?.Price">
+              @Html.ValidationMessageFor(model => model.Price, null, new { style = "color:red" })
+              <label for="floatingInputGrid">Введите цену за место</label>
+            </div>
+          </div>          
+        </div>
+
+        
+    <div class="createButton">
+        <button class="btn btn-success" type="submit">
+                Создать
+            </button>
+            <button class="btn btn-primary" type="reset">
+                Очистить
+        </button>
+    </div>
+        
+    </form>
+</div>*@
