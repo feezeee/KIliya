@@ -6,7 +6,7 @@ namespace WebApplication1.Models
     {
         public static string GetInfo(this Train train)
         {
-            string str = $"{train?.Name}({train?.DestinationFrom}({train?.DepartureTime})-{train?.DestinationTo}({train?.ArrivalTime}))";
+            string str = $"{train?.Name}";
             return str;
         }
     }

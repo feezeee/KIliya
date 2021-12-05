@@ -25,11 +25,10 @@
                     <tr class="rowEditStart">
                         <th class="d-flex justify-content-between">
                             @{
-                                if(AuthorizedUser.GetInstance()?.GetWorker()?.Id != el.Id)
-                                {
+                                
                                     <a asp-action="Edit" asp-controller="Client" asp-route-id="@el.Id"><i class="bi bi-pencil"></i></a>
-                                    
-                                }
+
+                                
                                 if(el.Tickets?.Count == 0 && el.Id != AuthorizedUser.GetInstance()?.GetWorker()?.Id)
                                 {
                                     <a asp-action="Delete" asp-controller="Client" asp-route-id="@el.Id"><i class="bi bi-trash"></i></a>

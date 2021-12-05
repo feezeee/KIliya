@@ -18,21 +18,6 @@ namespace WebApplication1.Models
         public string Name { get; set; }
 
 
-        [Column("train_departure_time")]
-        public DateTime? DepartureTime { get; set; }
-
-        [Column("train_arrival_time")]
-        public DateTime? ArrivalTime { get; set; }
-
-        [Column("train_destination_from")]
-        public string? DestinationFrom { get; set; }
-
-        [Column("train_destination_to")]
-        public string? DestinationTo { get; set; }
-
-
-
-
         public List<TrainDestination> TrainDestinations { get; set; } = new List<TrainDestination>();
         public List<TrainVanSit> TrainVanSits { get; set; } = new List<TrainVanSit>();
     }
