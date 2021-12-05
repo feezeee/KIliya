@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using WebApplication1.Models;
@@ -13,16 +14,20 @@ namespace WebApplication1.Controllers
             this.db = db;
         }
         // GET: TrainDestinationController
+        [Authorize(Roles = "Администратор, Кассир")]
+
         public async Task<IActionResult> Index()
         {
             
-            var res = db.TrainDestinations.Include(t => t.Train).Include(t=>t.Destination).OrderBy(t => t.DepartureTime).OrderBy(t=>t.ArrivalTime).AsEnumerable().GroupBy(t => t.TrainId);
+            var res = db.TrainDestinations.Include(t => t.Train).Include(t=>t.Destination).OrderBy(t => t.DepartureTime).OrderBy(t=>t.ArrivalTime).AsEnumerable().GroupBy(t => t.TrainId).OrderBy(t=>t.Key);
             ViewData["Title"] = "Поезда и маршруты";
             return View(res);
         }
 
 
         // GET: TrainDestinationController/Create
+        [Authorize(Roles = "Администратор")]
+
         public async Task<IActionResult> Create()
         {
             TrainDestination trainDestination = new TrainDestination();
@@ -35,6 +40,8 @@ namespace WebApplication1.Controllers
         // POST: TrainDestinationController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Администратор")]
+
         public async Task<IActionResult> Create(TrainDestination trainDestination)
         {
             if (ModelState.IsValid)
@@ -51,6 +58,8 @@ namespace WebApplication1.Controllers
         }
 
         // GET: TrainDestinationController/Edit/5
+        [Authorize(Roles = "Администратор")]
+
         public async Task<IActionResult> Edit(int id)
         {
             Train train = await db.Trains.Include(t => t.TrainDestinations).Where(t => t.Id == id).FirstOrDefaultAsync();
@@ -61,6 +70,8 @@ namespace WebApplication1.Controllers
         // POST: TrainDestinationController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Администратор")]
+
         public async Task<IActionResult> Edit(Train train)
         {
             if (ModelState.IsValid)
@@ -96,13 +107,15 @@ namespace WebApplication1.Controllers
 
 
         // GET: TrainDestinationController/Delete/5
+        [Authorize(Roles = "Администратор")]
+
         public async Task<IActionResult> Delete(int id)
         {
-            var res = await db.TrainDestinations.Include(t => t.TrainDestinations).Where(t => t.Id == id).FirstOrDefaultAsync();
+            var res = await db.TrainDestinations.Where(t => t.Id == id).FirstOrDefaultAsync();
 
-            if (res != null && res.TrainDestinations?.Count == 0)
+            if (res != null)
             {
-                db.Trains.Remove(res);
+                db.TrainDestinations.Remove(res);
                 await db.SaveChangesAsync();
             }
             return RedirectToAction("Index");

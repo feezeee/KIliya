@@ -24,9 +24,18 @@
             {                          
                     <tr class="rowEditStart">
                         <th class="d-flex justify-content-between">
-                            <a asp-action="Edit" asp-controller="TrainDestination" asp-route-id="@gr.Key"><i class="bi bi-pencil"></i></a>
-                            <a asp-action="Delete" asp-controller="TrainDestination" asp-route-id="@gr.Key"><i class="bi bi-trash"></i></a>
-                        </th>
+                             @{
+                                if (User.IsInRole("Администратор"))
+                                {
+                            <a asp-action="Edit" asp-controller="TrainDestination" asp-route-id="@traindest.Id"><i class="bi bi-pencil"></i></a>
+                                        <a asp-action="Delete" asp-controller="TrainDestination" asp-route-id="@traindest.Id"><i class="bi bi-trash"></i></a>
+                                    }
+                                    else
+                                    {
+                                        <br />
+                                    }
+                                    }
+                                    </th>
                         <td class="text-center">
                             @traindest.Train?.Name
                         </td>  

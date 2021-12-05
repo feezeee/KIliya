@@ -1,0 +1,64 @@
+﻿@model IEnumerable<Client>
+@{
+    Layout = "_Layout";    
+}
+
+
+
+
+<div class="container-fluid myContainer">
+    <div class="div-contenet-table overflow-auto">
+        <table class="table shadow p-3 mb-5 rounded" id="myTable">
+            <thead>
+                <tr>                    
+                    <th></th>
+                    <th class="text-center">Имя</th>
+                    <th class="text-center">Фамилия</th>
+                    <th class="text-center">Паспорт</th>
+                    <th class="text-center">Номер телефона</th>
+                </tr>
+            </thead>            
+            <tbody id="editClickbody">
+                
+                @foreach (var el in Model)
+                {                    
+                    <tr class="rowEditStart">
+                        <th class="d-flex justify-content-between">
+                            @{
+                                if(AuthorizedUser.GetInstance()?.GetWorker()?.Id != el.Id)
+                                {
+                                    <a asp-action="Edit" asp-controller="Client" asp-route-id="@el.Id"><i class="bi bi-pencil"></i></a>
+                                    
+                                }
+                                if(el.Tickets?.Count == 0 && el.Id != AuthorizedUser.GetInstance()?.GetWorker()?.Id)
+                                {
+                                    <a asp-action="Delete" asp-controller="Client" asp-route-id="@el.Id"><i class="bi bi-trash"></i></a>
+                                    
+                                }
+                                else
+                                {
+                                    <br>
+                                }
+                            }
+                        </th>   
+                        <td class="text-center">
+                            @el.FirstName
+                        </td>
+                        <td class="text-center">
+                            @el.LastName
+                        </td>
+                        <td class="text-center">
+                            @el.PassNumber
+                        </td>
+                        <td class="text-center">
+                            @el.PhoneNumber
+                        </td>                        
+                    </tr>
+                }              
+                
+            </tbody>
+        </table>
+
+    </div>
+</div>
+

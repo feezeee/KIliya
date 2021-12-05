@@ -93,12 +93,12 @@ body{
 /*Для создания чего-либо*/
 .createPlace
 {
-    height: 100%;
+    min-height: 100%;
     width: 100%;
     display: flex;
     justify-content:center;
     align-items:center;
-    padding:10px;
+    padding:20px;
 }
 .createForm {
     min-width: 700px;

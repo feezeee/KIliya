@@ -15,93 +15,97 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css"/>
     <link rel="stylesheet" href="~/css/site.css" />
-     <link rel="stylesheet" href="~/lib/bootstrap/icons-1.7.1/font//bootstrap-icons.css" />
+     <link rel="stylesheet" href="~/lib/bootstrap/icons-1.7.1/font/bootstrap-icons.css" />
 </head>
 <body>    
-    <div class="myNav shadow p-3 mb-5 rounded">
+    <div class="myNav shadow p-3 mb-5 rounded Height100 overflow-auto">
         <div class="myHeader bg-dark text-center fs-1">
             <a class="text-white" asp-controller="Home" asp-action="Index">ЖД вокзал</a>
         </div>
         <ul>
-            <li>
-                <p class="fs-4">Группа пользователей</p>
-                <a asp-controller="AccessRight" asp-action="Index">Список групп</a>
-                <a asp-controller="AccessRight" asp-action="Create">Добавить группу</a>           
-            </li>
-            <li>
-                <p class="fs-4">Работники</p>
-                <a asp-controller="Worker" asp-action="Index">Список работников</a>
-                <a asp-controller="Worker" asp-action="Create">Добавить работника</a>           
-            </li>
+            @if (User.IsInRole("Администратор"))
+            {
+                <li>
+                    <p class="fs-4">Группа пользователей</p>
+                    <a asp-controller="AccessRight" asp-action="Index">Список групп</a>
+                    <a asp-controller="AccessRight" asp-action="Create">Добавить группу</a>           
+                </li>
+                <li>
+                    <p class="fs-4">Работники</p>
+                    <a asp-controller="Worker" asp-action="Index">Список работников</a>
+                    <a asp-controller="Worker" asp-action="Create">Добавить работника</a>           
+                </li>
+            }
+
              <li>
                 <p class="fs-4">Места назначения</p>
                 <a asp-controller="Destination" asp-action="Index">Список мест назначения</a>
-                <a asp-controller="Destination" asp-action="Create">Добавить место назначения</a>           
+                @if (User.IsInRole("Администратор"))
+                {
+                    <a asp-controller="Destination" asp-action="Create">Добавить место назначения</a>
+                }
             </li>
              <li>
                 <p class="fs-4">Поезда</p>
                 <a asp-controller="Train" asp-action="Index">Список поездов</a>
-                <a asp-controller="Train" asp-action="Create">Добавить поезд</a>  
+                @if (User.IsInRole("Администратор"))
+                {
+                        <a asp-controller="Train" asp-action="Create">Добавить поезд</a>
+                }
                 <a asp-controller="TrainDestination" asp-action="Index">Все маршруты поездов</a> 
-                <a asp-controller="TrainDestination" asp-action="Create">Настройка маршрута поезда</a> 
-            </li>         
-            <li>
-                <p class="fs-4">Места</p>
-                <a asp-controller="SitPlace" asp-action="Index">Список возможных мест</a>
-                <a asp-controller="SitPlace" asp-action="Create">Добавить место</a>           
+                @if (User.IsInRole("Администратор"))
+                {
+                        <a asp-controller="TrainDestination" asp-action="Create">Настройка маршрута поезда</a>
+                }
+                <a asp-controller="TrainVanSit" asp-action="Index">Поезд-Вагон-Место</a> 
+                @if (User.IsInRole("Администратор"))
+                {
+                        <a asp-controller="TrainVanSit" asp-action="Create">Настройка поезда</a>
+                }
             </li>  
-             <li>
-                <p class="fs-4">Вагоны</p>
+            @if (User.IsInRole("Администратор"))
+            {
+                <li>
+                    <p class="fs-4">Места</p>
+                    <a asp-controller="SitPlace" asp-action="Index">Список возможных мест</a>
+                    <a asp-controller="SitPlace" asp-action="Create">Добавить место</a>           
+                </li>  
+
+
+                <li>
+                    <p class="fs-4">Вагоны</p>
                 <a asp-controller="Van" asp-action="Index">Список вагонов</a>
                 <a asp-controller="Van" asp-action="Create">Добавить вагон</a>           
             </li>  
+            }
+             <li>
+                <p class="fs-4">Клиенты</p>
+                <a asp-controller="Client" asp-action="Index" >Список клиентов</a>
+                <a asp-controller="Client" asp-action="Create" >Добавить клиента</a>           
+            </li>  
+            <li>
+                <p class="fs-4">Билеты</p>
+                <a asp-controller="Ticket" asp-action="Index" >Список билетов</a>
+                <a asp-controller="Ticket" asp-action="Create" >Добавить билет</a>           
+            </li> 
+            <li>
+                <p class="fs-4">@AuthorizedUser.GetInstance().GetWorker().GetInfo()</p>
+                 <form method="post" asp-controller="Account" asp-action="Logout">
+
+                    <button class="btn btn-light">
+                        Выход
+                    </button>
+                </form>        
+            </li> 
         </ul>
     </div>
     <div class="myMain">
-        <main class="Height100 overflow-auto">
-            @RenderBody()
+        <main class="Height100">             
+             @RenderBody()            
         </main>
     </div>
     
-
-
-
-    @*<div class="canvi-navbar"></div>
-    <div class="canvi-content"></div>
-
-    <header>
-        <span class="js-canvi-open-button--left btn">Открыть панель слева</span>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">WebApplication1</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </nav>
-    </header>
-    <div class="container">
-        <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
-    </div>
-
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2021 - WebApplication1 - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-        </div>
-    </footer>*@
+   
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>

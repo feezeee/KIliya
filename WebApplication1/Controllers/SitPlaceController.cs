@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -15,6 +16,7 @@ namespace WebApplication1.Controllers
             this.db = db;
         }
         // GET: SitPlaceController
+        [Authorize(Roles = "Администратор")]
         public async Task<IActionResult> Index()
         {
             //
@@ -25,6 +27,8 @@ namespace WebApplication1.Controllers
 
 
         // GET: SitPlaceController/Create
+        [Authorize(Roles = "Администратор")]
+
         public async Task<IActionResult> Create()
         {
             ViewData["Title"] = "Добавление места";
@@ -33,6 +37,8 @@ namespace WebApplication1.Controllers
         }
 
         // POST: SitPlaceController/Create
+        [Authorize(Roles = "Администратор")]
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(SitPlace sitPlace)
@@ -49,6 +55,8 @@ namespace WebApplication1.Controllers
         }
 
         // GET: SitPlaceController/Edit/5
+        [Authorize(Roles = "Администратор")]
+
         public async Task<IActionResult> Edit(int id)
         {
             SitPlace sitPlace = await db.SitPlaces.Include(t=>t.TrainVanSits).Where(t => t.Id == id).FirstOrDefaultAsync();
@@ -59,6 +67,8 @@ namespace WebApplication1.Controllers
         // POST: SitPlaceController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Администратор")]
+
         public async Task<IActionResult> Edit(SitPlace sitPlace)
         {
             if (ModelState.IsValid)
@@ -94,6 +104,8 @@ namespace WebApplication1.Controllers
 
 
         // GET: SitPlaceController/Delete/5
+        [Authorize(Roles = "Администратор")]
+
         public async Task<IActionResult> Delete(int id)
         {
             var res = await db.SitPlaces.Include(t => t.TrainVanSits).Where(t => t.Id == id).FirstOrDefaultAsync();

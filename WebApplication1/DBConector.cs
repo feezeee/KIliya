@@ -19,7 +19,7 @@ namespace WebApplication1
         public DbSet<Train> Trains { get; set; }
         public DbSet<TrainDestination> TrainDestinations { get; set; }
         public DbSet<Van> Vans { get; set; }
-        public DbSet<TrainVanSit> VanSits { get; set; }
+        public DbSet<TrainVanSit> TrainVanSits { get; set; }
         public DbSet<Worker> Workers { get; set; }
 
     }

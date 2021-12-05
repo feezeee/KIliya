@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -15,6 +16,7 @@ namespace WebApplication1.Controllers
             this.db = db;
         }
         // GET: TrainController
+        [Authorize(Roles = "Администратор, Кассир")]
         public async Task<IActionResult> Index()
         {
             //
@@ -25,6 +27,8 @@ namespace WebApplication1.Controllers
 
 
         // GET: TrainController/Create
+        [Authorize(Roles = "Администратор")]
+
         public async Task<IActionResult> Create()
         {
             ViewData["Title"] = "Добавление поезда";           
@@ -35,6 +39,8 @@ namespace WebApplication1.Controllers
         // POST: TrainController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Администратор")]
+
         public async Task<IActionResult> Create(Train train)
         {
             if (ModelState.IsValid)
@@ -49,6 +55,8 @@ namespace WebApplication1.Controllers
         }
 
         // GET: TrainController/Edit/5
+        [Authorize(Roles = "Администратор")]
+
         public async Task<IActionResult> Edit(int id)
         {
             Train train = await db.Trains.Include(t => t.TrainDestinations).Where(t => t.Id == id).FirstOrDefaultAsync();
@@ -59,6 +67,8 @@ namespace WebApplication1.Controllers
         // POST: TrainController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Администратор")]
+
         public async Task<IActionResult> Edit(Train train)
         {
             if (ModelState.IsValid)
@@ -94,6 +104,8 @@ namespace WebApplication1.Controllers
 
 
         // GET: TrainController/Delete/5
+        [Authorize(Roles = "Администратор")]
+
         public async Task<IActionResult> Delete(int id)
         {
             var res = await db.Trains.Include(t => t.TrainDestinations).Where(t => t.Id == id).FirstOrDefaultAsync();

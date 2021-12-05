@@ -22,15 +22,23 @@
                 {                    
                     <tr class="rowEditStart">
                         <th class="d-flex justify-content-between">
-                            <a asp-action="Edit" asp-controller="Train" asp-route-id="@el.Id"><i class="bi bi-pencil"></i></a>
-                            @{
-                                if(el.TrainDestinations?.Count == 0 && el.TrainVanSits?.Count == 0)
+                             @{
+                                if (User.IsInRole("Администратор"))
                                 {
-                                    <a asp-action="Delete" asp-controller="Train" asp-route-id="@el.Id"><i class="bi bi-trash"></i></a>                                    
+                                <a asp-action="Edit" asp-controller="Train" asp-route-id="@el.Id"><i class="bi bi-pencil"></i></a>
+                            
+                                    if(el.TrainDestinations?.Count == 0 && el.TrainVanSits?.Count == 0)
+                                    {
+                                        <a asp-action="Delete" asp-controller="Train" asp-route-id="@el.Id"><i class="bi bi-trash"></i></a>                                    
+                                    }
+                                    else
+                                    {
+                                        <br>
+                                    }
                                 }
                                 else
                                 {
-                                    <br>
+                                    <br />
                                 }
                             }
                         </th>                        

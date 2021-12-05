@@ -1,0 +1,40 @@
+﻿@model Ticket
+@{
+    Layout = "_Layout";
+}
+
+<div class="createPlace">
+    <form class="createForm form-floating" asp-controller="Ticket" asp-action="Create" method="post">
+            <a asp-controller="Ticket" asp-action="Index" class="position-absolute top-0 start-100 translate-middle"><i class="bi bi-x-circle fs-2"></i></a>
+        
+        <div class="row g-2 p-3">
+          <div class="col-md">
+            <div class="form-floating">
+                <select required asp-for="ClientId" asp-items="ViewBag.Clients" class="form-select" id="floatingSelectGrid" aria-label="Floating label select example" value="@Model?.ClientId"></select>              
+                <label for="floatingSelectGrid">Клиенты</label>
+            </div>
+          </div>
+        </div>
+
+        <div class="row g-2 p-3">
+          <div class="col-md">
+            <div class="form-floating">
+                <select required asp-for="TrainVanSitId" asp-items="ViewBag.TrainVanSits" class="form-select" id="floatingSelectGrid" aria-label="Floating label select example" value="@Model?.TrainVanSitId"></select>              
+                <label for="floatingSelectGrid">Поезд-Вагон-Место</label>
+            </div>
+          </div>  
+        </div>      
+        
+        
+    <div class="createButton">
+        <button class="btn btn-success" type="submit">
+                Создать
+            </button>
+            <button class="btn btn-primary" type="reset">
+                Очистить
+        </button>
+    </div>
+    </form>
+</div>
+
+

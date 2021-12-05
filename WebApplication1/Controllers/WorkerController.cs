@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -13,10 +14,11 @@ namespace WebApplication1.Controllers
         public WorkerController(DBConector db)
         {
             this.db = db;
-            Worker worker = db.Workers.Include(t => t.AccessRight).Include(t => t.Tickets).Include(t => t.Tickets).First();
-            AuthorizedUser.GetInstance().SetUser(worker);
+            //Worker worker = db.Workers.Include(t => t.AccessRight).Include(t => t.Tickets).Include(t => t.Tickets).First();
+            //AuthorizedUser.GetInstance().SetUser(worker);
         }
         // GET: WorkerController
+        [Authorize(Roles = "Администратор")]
         public async Task<IActionResult> Index()
         {
             var res = await db.Workers.Include(t => t.AccessRight).Include(t=>t.Tickets).Include(t => t.Tickets).ToListAsync();
@@ -26,6 +28,8 @@ namespace WebApplication1.Controllers
 
 
         // GET: WorkerController/Create
+        [Authorize(Roles = "Администратор")]
+
         public async Task<IActionResult> Create()
         {
             ViewData["Title"] = "Добавление сотрудника";
@@ -35,6 +39,7 @@ namespace WebApplication1.Controllers
         }
 
         // POST: WorkerController/Create
+        [Authorize(Roles = "Администратор")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(Worker worker)
@@ -52,6 +57,7 @@ namespace WebApplication1.Controllers
         }
 
         // GET: WorkerController/Edit/5
+        [Authorize(Roles = "Администратор")]
         public async Task<IActionResult> Edit(int id)
         {
             Worker worker = await db.Workers.Include(t => t.AccessRight).Include(t => t.Tickets).Include(t => t.Tickets).Where(t=>t.Id == id).FirstOrDefaultAsync();
@@ -63,6 +69,8 @@ namespace WebApplication1.Controllers
         // POST: WorkerController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Администратор")]
+
         public async Task<IActionResult> Edit(Worker worker)
         {
             if (ModelState.IsValid)
@@ -78,6 +86,8 @@ namespace WebApplication1.Controllers
 
 
         // GET: WorkerController/Delete/5
+        [Authorize(Roles = "Администратор")]
+
         public async Task<IActionResult> Delete(int id)
         {
             var res = await db.Workers.Include(t => t.AccessRight).Include(t=>t.Tickets).Include(t => t.Tickets).Where(t=>t.Id == id).FirstOrDefaultAsync();

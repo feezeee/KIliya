@@ -1,0 +1,72 @@
+﻿@model TrainVanSit
+@{
+    Layout = "_Layout";
+}
+
+<div class="createPlace">
+    <form class="createForm form-floating" asp-controller="TrainVanSit" asp-action="Edit" method="post">
+            <a asp-controller="TrainVanSit" asp-action="Index" class="position-absolute top-0 start-100 translate-middle"><i class="bi bi-x-circle fs-2"></i></a>
+        
+        <div class="row g-2 p-3">
+          <div class="col-md">
+            <div class="form-floating">
+                <input hidden asp-for="TrainVanSitId" class="form-control" id="floatingInputGrid" placeholder="Id" value="@Model?.TrainVanSitId"/>
+                <select required asp-for="TrainId" asp-items="ViewBag.Trains" class="form-select" id="floatingSelectGrid" aria-label="Floating label select example" value="@Model?.TrainId"></select>              
+                <label for="floatingSelectGrid">Поезд</label>
+            </div>
+          </div>
+          
+        </div>
+        <div class="row g-2 p-3">
+          <div class="col-md">
+            <div class="form-floating">
+                <select required asp-for="VanId" asp-items="ViewBag.Vans" class="form-select" id="floatingSelectGrid" aria-label="Floating label select example" value="@Model?.VanId"></select>              
+                <label for="floatingSelectGrid">Вагон</label>
+            </div>
+          </div>
+        </div>
+        <div class="row g-2 p-3">
+            @if(ViewBag.SitPlaces != null)
+        {            
+             <div class="row g-2 p-3">
+             <span>Выберите места</span>
+             @foreach(SitPlace sit in ViewBag.SitPlaces)
+             {
+                    if (ViewBag.SelectedSitPlaces.Contains(sit))
+                        {
+                             <label style="display: flex; align-items:center;">
+                                <input type="checkbox"
+                                       name="selectedSits"
+                                       value="@sit.Id" style="margin-right: 10px;" checked />
+                                @sit.Name
+                            </label>
+                        }
+                        else
+                        {
+                             <label style="display: flex; align-items:center;">
+                                <input type="checkbox"
+                                       name="selectedSits"
+                                       value="@sit.Id" style="margin-right: 10px;" />
+                                @sit.Name
+                            </label>
+                        }
+                }
+               
+            }
+           
+            </div>
+        }  
+         </div>        
+    <div class="createButton">
+        <button class="btn btn-success" type="submit">
+                Сохранить
+            </button>
+            <button class="btn btn-primary" type="reset">
+                Очистить
+        </button>
+    </div>
+        
+    </form>
+</div>
+
+

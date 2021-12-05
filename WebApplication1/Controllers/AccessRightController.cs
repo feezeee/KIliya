@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -15,6 +16,8 @@ namespace WebApplication1.Controllers
             this.db = db;
         }
         // GET: AccessRightController
+        [Authorize(Roles = "Администратор")]
+
         public async Task<IActionResult> Index()
         {
             var res = await db.AccessRights.Include(t => t.Workers).ToListAsync();            
@@ -24,6 +27,8 @@ namespace WebApplication1.Controllers
 
 
         // GET: AccessRightController/Create
+        [Authorize(Roles = "Администратор")]
+
         public async Task<IActionResult> Create()
         {
             ViewData["Title"] = "Добавление группы пользователей";
@@ -34,6 +39,8 @@ namespace WebApplication1.Controllers
         // POST: AccessRightController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Администратор")]
+
         public async Task<IActionResult> Create(AccessRight accessRight)
         {
             if (ModelState.IsValid)
@@ -48,6 +55,8 @@ namespace WebApplication1.Controllers
         }
 
         // GET: AccessRightController/Edit/5
+        [Authorize(Roles = "Администратор")]
+
         public async Task<IActionResult> Edit(int id)
         {
             ViewData["Title"] = "Изменение группы пользователей";
@@ -58,6 +67,8 @@ namespace WebApplication1.Controllers
         // POST: AccessRightController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Администратор")]
+
         public async Task<IActionResult> Edit(AccessRight accessRight)
         {
             if (ModelState.IsValid)
@@ -94,6 +105,7 @@ namespace WebApplication1.Controllers
 
 
         // GET: AccessRightController/Delete/5
+        [Authorize(Roles = "Администратор")]
         public async Task<IActionResult> Delete(int id)
         {
             var res = await db.AccessRights.Include(t => t.Workers).Where(t => t.Id == id).FirstOrDefaultAsync();

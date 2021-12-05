@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -15,6 +16,8 @@ namespace WebApplication1.Controllers
             this.db = db;
         }
         // GET: VanController
+        [Authorize(Roles = "Администратор")]
+
         public async Task<IActionResult> Index()
         {
             var res = await db.Vans.Include(t => t.TrainVanSits).ToListAsync();
@@ -24,6 +27,8 @@ namespace WebApplication1.Controllers
 
 
         // GET: VanController/Create
+        [Authorize(Roles = "Администратор")]
+
         public async Task<IActionResult> Create()
         {
             ViewData["Title"] = "Добавление вагона";
@@ -34,6 +39,8 @@ namespace WebApplication1.Controllers
         // POST: VanController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Администратор")]
+
         public async Task<IActionResult> Create(Van van)
         {
             if (ModelState.IsValid)
@@ -48,6 +55,8 @@ namespace WebApplication1.Controllers
         }
 
         // GET: VanController/Edit/5
+        [Authorize(Roles = "Администратор")]
+
         public async Task<IActionResult> Edit(int id)
         {
             ViewData["Title"] = "Изменение вагона";
@@ -58,6 +67,8 @@ namespace WebApplication1.Controllers
         // POST: VanController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Администратор")]
+
         public async Task<IActionResult> Edit(Van van)
         {
             if (ModelState.IsValid)
@@ -94,6 +105,8 @@ namespace WebApplication1.Controllers
 
 
         // GET: VanController/Delete/5
+        [Authorize(Roles = "Администратор")]
+
         public async Task<IActionResult> Delete(int id)
         {
             var res = await db.Vans.Include(t => t.TrainVanSits).Where(t => t.Id == id).FirstOrDefaultAsync();

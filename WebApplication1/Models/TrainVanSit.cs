@@ -28,9 +28,7 @@ namespace WebApplication1.Models
 
 
 
-        [Column("ticket_id")]
-        public int? TicketId { get; set; }
-        public Ticket? Ticket { get; set; }
+        public List<Ticket> Ticket { get; set; } = new List<Ticket>();
 
     }
 }

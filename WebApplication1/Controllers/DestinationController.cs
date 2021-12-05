@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -15,6 +16,9 @@ namespace WebApplication1.Controllers
             this.db = db;
         }
         // GET: DestinationController
+        [Authorize(Roles = "Администратор, Кассир")]
+
+
         public async Task<IActionResult> Index()
         {
             //
@@ -25,6 +29,8 @@ namespace WebApplication1.Controllers
 
 
         // GET: DestinationController/Create
+        [Authorize(Roles = "Администратор")]
+
         public async Task<IActionResult> Create()
         {
             ViewData["Title"] = "Добавление места назначения";           
@@ -35,6 +41,8 @@ namespace WebApplication1.Controllers
         // POST: DestinationController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Администратор")]
+
         public async Task<IActionResult> Create(Destination destination)
         {
             if (ModelState.IsValid)
@@ -49,6 +57,8 @@ namespace WebApplication1.Controllers
         }
 
         // GET: DestinationController/Edit/5
+        [Authorize(Roles = "Администратор")]
+
         public async Task<IActionResult> Edit(int id)
         {
             Destination destination = await db.Destinations.Include(t => t.TrainDestinations).Where(t => t.Id == id).FirstOrDefaultAsync();
@@ -59,6 +69,8 @@ namespace WebApplication1.Controllers
         // POST: DestinationController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Администратор")]
+
         public async Task<IActionResult> Edit(Destination destination)
         {
             if (ModelState.IsValid)
@@ -94,6 +106,8 @@ namespace WebApplication1.Controllers
 
 
         // GET: DestinationController/Delete/5
+        [Authorize(Roles = "Администратор")]
+
         public async Task<IActionResult> Delete(int id)
         {
             var res = await db.Destinations.Include(t => t.TrainDestinations).Where(t => t.Id == id).FirstOrDefaultAsync();

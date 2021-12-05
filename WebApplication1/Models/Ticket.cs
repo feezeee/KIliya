@@ -23,7 +23,10 @@ namespace WebApplication1.Models
         [Range(0, int.MaxValue, ErrorMessage = "Цена не может быть отрицательной")]
         public int AllPrice { get; set; }
 
-        public List<TrainVanSit> Van_SitPlaces { get; set; } = new List<TrainVanSit>();
 
+        [Column("train_van_sit_id")]
+        [Required]
+        public int TrainVanSitId { get; set; }
+        public TrainVanSit? TrainVanSit { get; set; }
     }
 }

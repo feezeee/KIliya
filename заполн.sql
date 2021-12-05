@@ -3,7 +3,7 @@ USE railway_station;
 INSERT INTO `railway_station`.`access_rights`
 (`access_right_name`)
 VALUES
-("Админ"),
+("Администратор"),
 ("Кассир");
 
 INSERT INTO `railway_station`.`clients`

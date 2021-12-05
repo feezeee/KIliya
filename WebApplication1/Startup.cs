@@ -31,12 +31,12 @@ namespace WebApplication1
             var connection = Configuration.GetConnectionString("DefaultConnection");
             services.AddDbContext<DBConector>(options => options.UseMySQL(connection));
 
-            //services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
-            //   .AddCookie(options =>
-            //   {
-            //       options.LoginPath = new Microsoft.AspNetCore.Http.PathString("/Account/Login");
-            //       options.AccessDeniedPath = new Microsoft.AspNetCore.Http.PathString("/Account/Login");
-            //   });
+            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+               .AddCookie(options =>
+               {
+                   options.LoginPath = new Microsoft.AspNetCore.Http.PathString("/Account/Login");
+                   options.AccessDeniedPath = new Microsoft.AspNetCore.Http.PathString("/Account/Login");
+               });
 
 
             services.AddControllersWithViews();
@@ -61,8 +61,8 @@ namespace WebApplication1
             app.UseStaticFiles();
 
             app.UseRouting();
-            //app.UseAuthentication();
-            //app.UseAuthorization();
+            app.UseAuthentication();
+            app.UseAuthorization();
 
 
 
@@ -80,6 +80,9 @@ namespace WebApplication1
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=AccessRight}/{action=Index}");
+                endpoints.MapControllerRoute(
+                    name: "default",
+                    pattern: "{controller=Client}/{action=Index}");
             });
         }
     }

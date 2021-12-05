@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.AspNetCore.Mvc;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace WebApplication1.Models
@@ -28,6 +29,7 @@ namespace WebApplication1.Models
         [Required(ErrorMessage = "Не указан паспорт")]
         [MaxLength(45)]
         [StringLength(45, ErrorMessage = "Длина строки должна быть до 45 символов")]
+        [Remote(action: "CheckPass", controller: "Client", AdditionalFields = "Id", ErrorMessage = "Такой клиент уже существует!", HttpMethod = "POST")]
         public string PassNumber { get; set; }
 
 
