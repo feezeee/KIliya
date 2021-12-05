@@ -20,7 +20,7 @@ namespace WebApplication1.Controllers
         public async Task<IActionResult> Index()
         {
             //
-            var res = await db.Trains.Include(t => t.TrainDestinations).ToListAsync();            
+            var res = await db.Trains.Include(t => t.TrainDestinations).Include(t=>t.TrainVanSits).ToListAsync();            
             ViewData["Title"] = "Поезда";
             return View(res);
         }
@@ -108,9 +108,9 @@ namespace WebApplication1.Controllers
 
         public async Task<IActionResult> Delete(int id)
         {
-            var res = await db.Trains.Include(t => t.TrainDestinations).Where(t => t.Id == id).FirstOrDefaultAsync();
+            var res = await db.Trains.Include(t => t.TrainDestinations).Include(t=>t.TrainVanSits).Where(t => t.Id == id).FirstOrDefaultAsync();
 
-            if (res != null && res.TrainDestinations?.Count == 0)
+            if (res != null && res.TrainDestinations?.Count == 0 && res.TrainVanSits?.Count == 0)
             {
                 db.Trains.Remove(res);
                 await db.SaveChangesAsync();

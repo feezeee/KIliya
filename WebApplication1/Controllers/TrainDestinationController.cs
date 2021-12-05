@@ -32,8 +32,8 @@ namespace WebApplication1.Controllers
         {
             TrainDestination trainDestination = new TrainDestination();
             ViewData["Title"] = "Добавление маршрута к поезду";
-            ViewBag.Destinations = new SelectList(await db.Destinations.ToListAsync(), "Id", "Name");
             ViewBag.Trains = new SelectList(await db.Trains.ToListAsync(), "Id", "Name");
+            ViewBag.Destinations = new SelectList(await db.Destinations.ToListAsync(), "Id", "Name");
             return View(trainDestination);
         }
 
@@ -52,8 +52,8 @@ namespace WebApplication1.Controllers
                 return RedirectToAction("Index");
             }
             ViewData["Title"] = "Добавление маршрута к поезду";
-            ViewBag.Destinations = new SelectList(await db.Destinations.ToListAsync(), "Id", "Name");
             ViewBag.Trains = new SelectList(await db.Trains.ToListAsync(), "Id", "Name");
+            ViewBag.Destinations = new SelectList(await db.Destinations.ToListAsync(), "Id", "Name");
             return View(trainDestination);
         }
 
@@ -62,8 +62,10 @@ namespace WebApplication1.Controllers
 
         public async Task<IActionResult> Edit(int id)
         {
-            Train train = await db.Trains.Include(t => t.TrainDestinations).Where(t => t.Id == id).FirstOrDefaultAsync();
+            TrainDestination train = await db.TrainDestinations.Include(t=>t.Train).Include(t=>t.Destination).Where(t => t.Id == id).FirstOrDefaultAsync();
             ViewData["Title"] = "Изменение поезда";
+            ViewBag.Trains = new SelectList(await db.Trains.ToListAsync(), "Id", "Name");
+            ViewBag.Destinations = new SelectList(await db.Destinations.ToListAsync(), "Id", "Name");
             return View(train);
         }
 
@@ -72,7 +74,7 @@ namespace WebApplication1.Controllers
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Администратор")]
 
-        public async Task<IActionResult> Edit(Train train)
+        public async Task<IActionResult> Edit(TrainDestination train)
         {
             if (ModelState.IsValid)
             {
@@ -81,6 +83,8 @@ namespace WebApplication1.Controllers
                 return RedirectToAction("Index");
             }
             ViewData["Title"] = "Изменение поезда";
+            ViewBag.Trains = new SelectList(await db.Trains.ToListAsync(), "Id", "Name");
+            ViewBag.Destinations = new SelectList(await db.Destinations.ToListAsync(), "Id", "Name");
             return View(train);
         }
 
