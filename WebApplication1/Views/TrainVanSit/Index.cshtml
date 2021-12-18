@@ -28,14 +28,8 @@
                             @{
                                 if (User.IsInRole("Администратор"))
                                 {
-                                    if (gr.Ticket?.Count == 0)
-                                    {
-                                        <a asp-action="Delete" asp-controller="TrainVanSit" asp-route-id="@gr.TrainVanSitId"><i class="bi bi-trash"></i></a>
-                                    }
-                                    else
-                                    {
-                                        <br />
-                                    }
+                                     <a asp-action="Delete" asp-controller="TrainVanSit" asp-route-id="@gr.TrainVanSitId"><i class="bi bi-trash"></i></a>
+                                                                        
                                 }
                                 else
                                 {

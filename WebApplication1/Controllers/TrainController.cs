@@ -110,7 +110,7 @@ namespace WebApplication1.Controllers
         {
             var res = await db.Trains.Include(t => t.TrainDestinations).Include(t=>t.TrainVanSits).Where(t => t.Id == id).FirstOrDefaultAsync();
 
-            if (res != null && res.TrainDestinations?.Count == 0 && res.TrainVanSits?.Count == 0)
+            if (res != null)
             {
                 db.Trains.Remove(res);
                 await db.SaveChangesAsync();

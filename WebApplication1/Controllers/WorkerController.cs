@@ -21,7 +21,12 @@ namespace WebApplication1.Controllers
         [Authorize(Roles = "Администратор")]
         public async Task<IActionResult> Index()
         {
-            var res = await db.Workers.Include(t => t.AccessRight).Include(t=>t.Tickets).Include(t => t.Tickets).ToListAsync();
+            var res = await db.Workers.FromSqlRaw("GetWorkers").ToListAsync();
+            foreach(var el in res)
+            {
+                el.AccessRight = db.AccessRights.Find(el.AccessRightId);
+                el.Tickets = await db.Tickets.Where(t => t.WorkerId == el.Id).ToListAsync();
+            }            
             ViewData["Title"] = "Сотрудники";
             return View(res);
         }

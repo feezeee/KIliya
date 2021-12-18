@@ -18,9 +18,13 @@ namespace WebApplication1.Controllers
 
         public async Task<IActionResult> Index()
         {
-            var res = await db.Clients.Include(t => t.Tickets).OrderBy(t => t.Id).ToListAsync();
+            var result = await db.Clients.FromSqlRaw("GetClients").ToListAsync();
+            foreach(var el in result)
+            {
+                el.Tickets = await db.Tickets.Where(t => t.ClientId == el.Id).ToListAsync();
+            }           
             ViewData["Title"] = "Клиенты";
-            return View(res);
+            return View(result);
         }
 
 

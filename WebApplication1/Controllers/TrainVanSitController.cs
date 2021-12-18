@@ -77,7 +77,7 @@ namespace WebApplication1.Controllers
         {
             var res = await db.TrainVanSits.Include(t => t.Train).Include(t => t.SitPlace).Include(t => t.Van).Include(t=>t.Ticket).Include(t => t.Ticket).Where(t => t.TrainVanSitId == id).FirstOrDefaultAsync();
 
-            if (res != null && res.Ticket?.Count == 0)
+            if (res != null)
             {
                 db.TrainVanSits.Remove(res);
                 await db.SaveChangesAsync();

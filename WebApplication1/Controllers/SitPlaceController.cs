@@ -19,8 +19,11 @@ namespace WebApplication1.Controllers
         [Authorize(Roles = "Администратор")]
         public async Task<IActionResult> Index()
         {
-            //
-            var res = await db.SitPlaces.Include(t => t.TrainVanSits).ToListAsync();
+            var res = await db.SitPlaces.FromSqlRaw("GetSit_places").ToListAsync();
+            foreach(var el in res)
+            {
+                el.TrainVanSits = await db.TrainVanSits.Where(t=>t.SitPlaceId == el.Id).ToListAsync();
+            }
             ViewData["Title"] = "Места";
             return View(res);
         }
